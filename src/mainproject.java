@@ -50,7 +50,7 @@ public class mainproject {
             }
             myReader.close();
 
-            NeuronNetwork nn = new NeuronNetwork(Train_dataset,Train_desired);
+            NeuralNetwork nn = new NeuralNetwork(Train_dataset,Train_desired);
 
         } catch (FileNotFoundException e) {
             System.out.println("An error occurred.");
