@@ -3,16 +3,16 @@ import java.util.*;
 public class NeuralNetwork {
     ArrayList<Double[]> Train_dataset = new ArrayList<>();
     ArrayList<Double[]> Train_desired = new ArrayList<>();
-    int Layer[] = {8, 7, 1};
+    int Layer[] = {8, 7, 7, 1};
     Double Desired[] = new Double[Layer[Layer.length-1]];
     Double Node[][] = new Double[Layer.length][]; //[layer][node]
     Double LocalGradient[][] = new Double[Layer.length][];
     Double Error[] = new Double[Layer[Layer.length-1]];
     Double AVGError = 1000.0;
     Double MinError = 0.00001;
-    Double MaxEpoch = 10000.0;
+    Double MaxEpoch = 100000.0;
     Double Biases = 1.0;
-    Double n =0.01;
+    Double n =0.001;
     Matrix[] LayerWeight = new Matrix[Layer.length - 1];
     Matrix[] WeightChange = new Matrix[Layer.length - 1];
     int Random[] = new int[300];
@@ -67,7 +67,30 @@ public class NeuralNetwork {
                 backward_pass();
                 changeweight();
 
-                System.out.println(Desired[0]*700 + "  " + activation_fn(Node[2][0])*700 + "  " + Error[0]*700);
+                System.out.println(Desired[0]*700 + "  " + activation_fn(Node[Layer.length-1][0])*700 + "  " + Error[0]*700 + "    " + (Desired[0]*700 - activation_fn(Node[Layer.length-1][0])*700));
+            }
+
+            N++;
+        }
+
+    }
+
+    public void test() {
+        int N = 0;
+        while (N < MaxEpoch && AVGError > MinError) {
+            for (int loop = 0; loop < Train_dataset.size(); loop++) {
+
+                for(int i = 0; i< Layer[Layer.length-1]; i++) {
+                    Desired[i] = Train_desired.get(loop)[i];
+                }
+
+                for (int i = 0; i < Layer[0]; i++) {
+                    Node[0][i] = Train_dataset.get(loop)[i];
+                }
+
+                forward_pass();
+
+                System.out.println(Desired[0]*700 + "  " + activation_fn(Node[Layer.length-1][0])*700 + "  " + Error[0]*700 + "    " + (Desired[0]*700 - activation_fn(Node[Layer.length-1][0])*700));
             }
 
             N++;
@@ -140,7 +163,6 @@ public class NeuralNetwork {
     }
 
     public Double activation_fn(Double v){
-
         return Math.max(0.01,v);
     }
 
