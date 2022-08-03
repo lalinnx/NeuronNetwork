@@ -67,7 +67,7 @@ public class NeuralNetwork {
                 backward_pass();
                 changeweight();
 
-                System.out.println(Desired[0]*800 + "  " + activation_fn(Node[2][0])*800 + "  " + Error[0]);
+                System.out.println(Desired[0]*700 + "  " + activation_fn(Node[2][0])*700 + "  " + Error[0]*700);
             }
 
             N++;
@@ -145,7 +145,7 @@ public class NeuralNetwork {
     }
 
     public Double activation_fn_diff(Double v){
-        if (v<=0) return 0.01;
+        if (v<=0.0) return 0.01;
         else return 1.0;
     }
 

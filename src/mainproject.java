@@ -25,11 +25,11 @@ public class mainproject {
                     Double[] arraydesired = new Double[1];
                     for (String a : dataline) {
                         if (i == 8){
-                            arraydesired[0] = Double.parseDouble(a)/500;
+                            arraydesired[0] = Double.parseDouble(a)/700;
                             Test_desired.add(arraydesired);
                             Test_dataset.add(arraydata);
                         }
-                        else arraydata[i] = Double.parseDouble(a)/500;
+                        else arraydata[i] = Double.parseDouble(a)/700;
 
                         i++;
                     }
@@ -38,11 +38,11 @@ public class mainproject {
                     Double[] arraydesired = new Double[1];
                     for (String a : dataline) {
                         if(i==8){
-                            arraydesired[0] = Double.parseDouble(a)/800;
+                            arraydesired[0] = Double.parseDouble(a)/700;
                             Train_desired.add(arraydesired);
                             Train_dataset.add(arraydata);
                         }
-                        else arraydata[i] = Double.parseDouble(a)/800 ;
+                        else arraydata[i] = Double.parseDouble(a)/700 ;
 
                         i++;
                     }
