@@ -3,18 +3,19 @@ import java.util.*;
 public class NeuralNetwork {
     ArrayList<Double[]> Train_dataset = new ArrayList<>();
     ArrayList<Double[]> Train_desired = new ArrayList<>();
-    int Layer[] = {8, 4, 1};
+    int Layer[] = {8, 7, 1};
     Double Desired[] = new Double[Layer[Layer.length-1]];
     Double Node[][] = new Double[Layer.length][]; //[layer][node]
     Double LocalGradient[][] = new Double[Layer.length][];
     Double Error[] = new Double[Layer[Layer.length-1]];
     Double AVGError = 1000.0;
     Double MinError = 0.00001;
-    Double MaxEpoch = 1000.0;
+    Double MaxEpoch = 10000.0;
     Double Biases = 1.0;
-    Double n =0.001;
+    Double n =0.01;
     Matrix[] LayerWeight = new Matrix[Layer.length - 1];
     Matrix[] WeightChange = new Matrix[Layer.length - 1];
+    int Random[] = new int[300];
 
 
     public NeuralNetwork(ArrayList data, ArrayList desired) {
@@ -40,6 +41,18 @@ public class NeuralNetwork {
         while (N < MaxEpoch && AVGError > MinError) {
             for (int loop = 0; loop < Train_dataset.size(); loop++) {
                 int Ran = (int) (Math.random() * Train_dataset.size());
+                boolean check = true;
+                while (check) {
+                    for (int i = 0; i < 300; i++) {
+                        if (Ran == Random[i]) {
+                            Ran = (int) (Math.random() * Train_dataset.size());
+                            break;
+                        }
+                        if (i==299){
+                            check = false;
+                        }
+                    }
+                }
 
                 for(int i = 0; i< Layer[Layer.length-1]; i++) {
                     Desired[i] = Train_desired.get(Ran)[i];
@@ -54,7 +67,7 @@ public class NeuralNetwork {
                 backward_pass();
                 changeweight();
 
-                System.out.println(Desired[0]*800 + "  " + activation_fn(Node[2][0])*800);
+                System.out.println(Desired[0]*800 + "  " + activation_fn(Node[2][0])*800 + "  " + Error[0]);
             }
 
             N++;
